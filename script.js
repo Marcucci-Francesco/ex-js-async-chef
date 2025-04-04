@@ -26,7 +26,7 @@ const getChefBirthday = async (id) => {
   }
 
   if (!birthdayChef) {
-    throw new Error(`Impossibile trovare la data di nascita dello chef`)
+    throw new Error(`Impossibile trovare la data di nascita dello chef con id ${id}`)
   }
 
   return birthdayChef;
