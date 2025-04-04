@@ -1,10 +1,24 @@
 const getChefBirthday = async (id) => {
-  const responseUser = await fetch(`https://dummyjson.com/recipes/${id}`)
-  const recipeDate = await responseUser.json();
-  const userId = recipeDate.userId;
-  const responseChef = await fetch(`https://dummyjson.com/users/${userId}`)
-  const recipeChef = await responseChef.json();
-  const birthdayChef = recipeChef.birthDate;
+
+  let userId;
+  let birthdayChef;
+
+  try {
+    const userResponse = await fetch(`https://dummyjson.com/recipes/${id}`)
+    const recipeUser = await userResponse.json();
+    userId = recipeUser.userId;
+  } catch (error) {
+    throw new Error(`Impossibile trovare l'user con id ${id}: ${error.message}`);
+  }
+
+  try {
+    const chefResponse = await fetch(`https://dummyjson.com/users/${userId}`)
+    const recipeChef = await chefResponse.json();
+    birthdayChef = recipeChef.birthDate;
+  } catch (error) {
+    throw new Error(`Impossibile trovare la data di nascita dello chef: ${error.message}`)
+  }
+
   return birthdayChef;
 }
 
@@ -14,6 +28,9 @@ const getChefBirthday = async (id) => {
     const birthdayChef = await getChefBirthday(1);
     console.log('Data di nascita dello Chef:', birthdayChef);
   } catch (error) {
-    console.error('Impossibile trovare quanto richiesto');
+    console.error(error.message);
+  } finally {
+    console.log('Fine!');
+
   }
 })();
