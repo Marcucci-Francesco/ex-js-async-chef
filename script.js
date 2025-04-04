@@ -8,7 +8,12 @@ const getChefBirthday = async (id) => {
   return birthdayChef;
 }
 
+
 (async () => {
-  const birthdayChef = await getChefBirthday(1);
-  console.log('Data di nascita dello Chef:', birthdayChef);
+  try {
+    const birthdayChef = await getChefBirthday(1);
+    console.log('Data di nascita dello Chef:', birthdayChef);
+  } catch (error) {
+    console.error('Impossibile trovare quanto richiesto');
+  }
 })();
